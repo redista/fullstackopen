@@ -1,0 +1,1 @@
+This is the solutions to exercises in the Full Stack Open 2019 course. https://fullstackopen.com/en/
