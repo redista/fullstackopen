@@ -19,6 +19,8 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  let total = good + neutral + bad
+  let good_feeback = (good / total) * 100
 
   return (
     /*<div>
@@ -36,6 +38,8 @@ const App = () => {
      <Display_stats text="Good" choice={good} />
      <Display_stats text="Neutral" choice={neutral} />
      <Display_stats text="Bad" choice={bad} />
+     <Display_stats text="Total" choice={total} />
+     <Display_stats text="Good feedback" choice={good_feeback + " %"} />
     </div>
   )
 }
