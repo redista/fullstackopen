@@ -4,16 +4,22 @@ import ReactDOM from 'react-dom'
 const Statistics = ({text, val, info}) => {
 	if (val === 0 || val === "NaN%") {
 		return (
-			 <p>{info}</p>
+			<tr>
+			 <td>
+			  {info}
+			 </td>
+			</tr>
 			)
 	}
 	return (
-		 <p>{text}: {val}</p>
+		<tr>
+		 <td>{text}:</td>
+		 <td>{val}</td>
+		</tr>
 		)
 }
 
 const Button = ({setVal, text}) => {
-	console.log(setVal)
 	return (
 		<button onClick={setVal}>{text}</button>
 		)
@@ -35,11 +41,15 @@ const App = () => {
      <Button setVal={() => setNeutral(neutral + 1)} text="Neutral" />
      <Button setVal={() => setBad(bad + 1)} text="Bad" />
      <h1> Statistics </h1>
-     <Statistics info="Stats are shown here" text="Good" val={good} />
-     <Statistics text="Neutral" val={neutral} />
-     <Statistics text="Bad" val={bad} />
-     <Statistics text="Total" val={total} />
-     <Statistics text="Average" val={average + "%"} />
+     <table>
+      <tbody>
+       <Statistics info="Stats are shown here" text="Good" val={good} />
+       <Statistics text="Neutral" val={neutral} />
+       <Statistics text="Bad" val={bad} />
+       <Statistics text="Total" val={total} />
+       <Statistics text="Average" val={average + "%"} />
+      </tbody>
+     </table>
     </div>
   )
 }
