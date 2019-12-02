@@ -1,52 +1,45 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Display_Stats = ({stat}) => {
-	if (stat.total === 0) {
+const Statistics = ({text, val, info}) => {
+	if (val === 0 || val === "NaN%") {
 		return (
-			<div>
-			 <p>Stats are shown here</p>
-			</div>
+			 <p>{info}</p>
 			)
 	}
 	return (
-		<div>
-		 <p>Good: {stat.good}</p>
-		 <p>Neutral: {stat.neutral}</p>
-		 <p>Bad: {stat.bad}</p>
-		 <p>Total: {stat.total}</p>
-		 <p>Good feedback: {stat.good_feeback}% </p>
-		</div>
+		 <p>{text}: {val}</p>
 		)
 }
 
-const Display_Feeback = ({ choice, text }) => {
+const Button = ({setVal, text}) => {
+	console.log(setVal)
 	return (
-		<p>{text}: {choice} </p>
+		<button onClick={setVal}>{text}</button>
 		)
 }
+
 
 const App = () => {
   // save clicks of each button to own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  var stats = {
-  	good: good,
-  	neutral: neutral,
-  	bad: bad,
-  	total: good + neutral + bad,
-    get good_feeback() { return (this.good / this.total) * 100 }
-	};
+  let total = good + neutral + bad
+  let average = (good / total) * 100
 
   return (
     <div>
      <h1>Give feedback</h1>
-     <button onClick={() => setGood(good + 1)}> Good </button>
-     <button onClick={() => setNeutral(neutral + 1)}> Neutral </button>
-     <button onClick={() => setBad(bad + 1)}> Bad </button>
+     <Button setVal={() => setGood(good + 1)} text="Good" />
+     <Button setVal={() => setNeutral(neutral + 1)} text="Neutral" />
+     <Button setVal={() => setBad(bad + 1)} text="Bad" />
      <h1> Statistics </h1>
-     <Display_Stats stat={stats} />
+     <Statistics info="Stats are shown here" text="Good" val={good} />
+     <Statistics text="Neutral" val={neutral} />
+     <Statistics text="Bad" val={bad} />
+     <Statistics text="Total" val={total} />
+     <Statistics text="Average" val={average + "%"} />
     </div>
   )
 }
