@@ -10,9 +10,15 @@ const App = () => {
   const addPerson = (e) => {
     e.preventDefault()
     console.log(e.target)
-    setPersons(persons.concat(
-      {name: newName}
-      ))
+    if (!persons.some(n => n.name === newName)) {
+      setPersons(persons.concat(
+        {name: newName}
+        ))
+      setNewName('')
+      }
+    else {
+      window.alert(`${newName} already exists`)
+    }
   }
 
   const handleNameChange = (e) => {
