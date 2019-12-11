@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HandleNames from './Components/HandleNames.js'
+import DisplayNames from './Components/DisplayNames.js'
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -10,6 +10,7 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ searchName, setSearchName ] = useState('')
 
   const addPerson = (e) => {
     e.preventDefault()
@@ -36,9 +37,18 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
+  const handleSearchName = (e) => {
+    e.preventDefault()
+    setSearchName(e.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter shown with <input value={searchName} onChange={handleSearchName}/>
+      </div>
+      <h2>Add a new one</h2>
       <form onSubmit={addPerson}>
         <div>
         name: <input value={newName} onChange={handleNameChange}/>       
@@ -52,7 +62,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <div>
-      <HandleNames persons={persons} />
+      <DisplayNames persons={persons} searchName={searchName} />
       </div>
     </div>
   )
