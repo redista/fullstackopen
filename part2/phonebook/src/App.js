@@ -15,7 +15,7 @@ const App = () => {
       .get('http://localhost:3001/persons')
       .then(response => setPersons(response.data)
       )
-  }, [persons])
+  }, [persons.length])
 
   const addPerson = (e) => {
     e.preventDefault()
