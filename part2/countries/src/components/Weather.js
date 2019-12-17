@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const AC_KEY = "3cfbf0690c69ab9da12214e1d72333ce"
-
 const Weather = ({ loc }) => {
     const [weatherData, setWeatherData] = useState(null)
 
     useEffect(() => {
         axios
-            .get(`http://api.weatherstack.com/current?access_key=${AC_KEY}&query=${loc}`)
+            .get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_WEATHER_API_KEY}&query=${loc}`)
             .then(response => {
                 setWeatherData(response.data)
             })
