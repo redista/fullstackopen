@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Country from './Country'
+import Weather from './Weather.js'
 
 const Show = ({ country }) => {
     const [display, setDisplay] = useState(false)
@@ -18,6 +19,7 @@ const Show = ({ country }) => {
             <div>
                 {country.name} <button onClick={handleClick} >Hide</button>
                 <Country country={country} />
+                <Weather loc={country.capital} />
             </div>
         )
     }
