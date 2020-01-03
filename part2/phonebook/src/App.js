@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import DisplayNames from './Components/DisplayNames.js'
 import Filter from './Components/Filter.js'
 import PersonForm from './Components/PersonForm.js'
+import numbers from './Services/numbers'
 import axios from 'axios'
 
 const App = () => {
@@ -11,25 +12,40 @@ const App = () => {
   const [ searchName, setSearchName ] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => setPersons(response.data)
-      )
-  }, [persons.length])
+    numbers
+      .getAll()
+      .then(initNumbers => setPersons(initNumbers))
+  }, [])
 
   const addPerson = (e) => {
     e.preventDefault()
-    if (!persons.some(n => n.name === newName)) {
-      setPersons(persons.concat(
-        {name: newName,
-        number: newNumber}
-        ))
-        setNewName('')
-        setNewNumber('')
+    
+    const i = persons.findIndex(n => n.name === newName)
+    console.log(newName)
+    console.log(i)
+    const personObj = {
+      name: newName,
+      number: newNumber
+    }
+    if (i < 0) {
+      numbers
+        .create(personObj)
+        .then(data => {
+          setPersons(persons.concat(personObj))
+        })
       }
     else {
-      window.alert(`${newName} already exists`)
+      const arr = persons.slice()
+
+      numbers
+        .update(i + 1, personObj)
+        .then(data => {
+          arr.splice(i, 1, personObj)
+          setPersons(arr) })
     }
+          
+    setNewName('')
+    setNewNumber('')
   }
 
   const handleNameChange = (e) => {
@@ -52,7 +68,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter searchName={searchName} handleSearchName={handleSearchName}/>
       <h2>Add a new one</h2>
-      <PersonForm  addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNameChange} />
+      <PersonForm  addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h3>Numbers</h3>
       <DisplayNames persons={persons} searchName={searchName} />
     </div>
